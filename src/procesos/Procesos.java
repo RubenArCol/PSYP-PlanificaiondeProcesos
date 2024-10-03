@@ -5,7 +5,6 @@
 package procesos;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  *
@@ -43,30 +42,39 @@ public class Procesos {
         
     public static void main(String[] args) {
         // TODO code application logic here
-    int np=5;    
+    int np=5;   
     Procesos[] p = new Procesos[np];
-    p[1]= new Procesos(0,5);
-    p[2]= new Procesos(1,3);
-    p[3]= new Procesos(2,10);
-    p[4]= new Procesos(3,1);
-    p[5]= new Procesos(4,2);
+    p[0]= new Procesos(0,5);
+    p[1]= new Procesos(1,3);
+    p[2]= new Procesos(2,10);
+    p[3]= new Procesos(3,1);
+    p[4]= new Procesos(4,2);
     
     ArrayList <Integer> cola = new ArrayList<Integer>();
     
-    for (int i = 0; i < 10; i++) {
-        for (int j = i; j < np; j++){
-            if(p[j].getEjecucion()==j){
+    int te =0; //Tiempo de ejecucion total
+    for (int i = 0; i < np; i++) {
+        te=te+p[i].getEjecucion();
+    }
+    System.out.println(te);
+     
+    for (int i = 0; i < te; i++) {
+        for (int j = 0; j < np; j++){
+            if(p[j].getLlegada()==i){
+                System.out.println(j);
                 int e=p[j].getEjecucion();
                 for (int k = 0; k < p[j].getEjecucion(); k++) {
                     cola.add(j);
+                    //System.out.println(j); Para saber en que momento entran en cola
                     e--;
                 }
                 p[j].setEjecucion(e);
             }
         
         }
-        
-        
+       int proceso=cola.getFirst();
+       cola.removeFirst();
+       System.out.println("Tiempo -->"+i+ "   Proceso-->"+proceso);   
     }
     
     }
