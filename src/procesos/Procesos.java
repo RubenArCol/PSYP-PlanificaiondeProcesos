@@ -56,12 +56,12 @@ public class Procesos {
     for (int i = 0; i < np; i++) {
         te=te+p[i].getEjecucion();
     }
-    System.out.println(te);
+    //System.out.println(te);
      
     for (int i = 0; i < te; i++) {
         for (int j = 0; j < np; j++){
             if(p[j].getLlegada()==i){
-                System.out.println(j);
+                //System.out.println(j);
                 int e=p[j].getEjecucion();
                 for (int k = 0; k < p[j].getEjecucion(); k++) {
                     cola.add(j);
