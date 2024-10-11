@@ -17,9 +17,9 @@ public class Main {
         // TODO code application logic here
         Algoritmos a = new Algoritmos();
         a.fifo();
-        //a.sjf();
+        a.sjf();
         //a.srtf();
-        a.roundrobin(2);
+        //a.roundrobin(2);
         //a.fifo();
     
     }

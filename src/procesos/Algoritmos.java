@@ -67,12 +67,55 @@ public class Algoritmos {
     }
     
     public void sjf(){
-        System.out.println("Algoritmo Fifo");
+        Procesos pAux[] = new Procesos[np];
+        
+        for (int i = 0; i < np; i++){
+            pAux[i] = p[i];
+
+            te += pAux[i].getEjecucion(); // calcula tiempo final
+        }
+
+        // ordeno el array por tiempo de ejecucion
+        for(int i=0; i <np-1; i++){
+            for(int j = 0; j < np - 1 - i; j++){
+                if (pAux[j].getEjecucion() > pAux[j+1].getEjecucion()){
+                    Procesos temp = pAux[j];
+                    pAux[j] = pAux[j+1];
+                    pAux[j+1] = temp;
+                }
+            }
+        }
+
+        System.out.println("SJF");
+
+        for(int i = 0; i < te; i++){ // recorre 20 procesos
+
+            for (int j = 0; j < np; j++){ // 
+
+                if(pAux[j].getLlegada() == i){
+
+                    int tEjecucion = pAux[j].getEjecucion();
+
+                    for (int k = 0; k < pAux[j].getEjecucion(); k++){
+                        cola.add(pAux[j].getId());
+                        tEjecucion--;
+                    }
+
+                    pAux[j].setEjecucion(tEjecucion);
+
+                }
+
+            }
+
+            int proceso = cola.getFirst();
+            cola.removeFirst();
+            System.out.println("Tiempo --> "+i+" Proceso --> "+proceso);
+        }
     }
     public void srtf(){
     
     }
-    
+
     public void roundrobin(int q){
         this.q=q;
 
