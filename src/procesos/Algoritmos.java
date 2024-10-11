@@ -22,38 +22,47 @@ public class Algoritmos {
         np=5;
         p = new Procesos[np];
         
-        p[0]= new Procesos(0,5);
-        p[1]= new Procesos(1,3);
-        p[2]= new Procesos(2,10);
-        p[3]= new Procesos(3,1);
-        p[4]= new Procesos(4,2);
+        p[0]= new Procesos(0,5, 0);
+        p[1]= new Procesos(1,3, 1);
+        p[2]= new Procesos(2,10, 2);
+        p[3]= new Procesos(3,1, 3);
+        p[4]= new Procesos(4,2, 4);
         
     }
     
     public void fifo(){
     
-        for (int i = 0; i < np; i++) {
-            te=te+p[i].getEjecucion();
+        Procesos pAux[] = new Procesos[np];
+        
+        for (int i = 0; i < np; i++){
+            pAux[i] = p[i];
+
+            te += pAux[i].getEjecucion(); // calcula tiempo final
         }
-        
-        System.out.println("Algoritmo Fifo");
-     
-        for (int i = 0; i < te; i++) {
-            for (int j = 0; j < np; j++){
-                if(p[j].getLlegada()==i){
-                    int e=p[j].getEjecucion();
-                    for (int k = 0; k < p[j].getEjecucion(); k++) {
+
+        System.out.println("Fifo");
+
+        for(int i = 0; i < te; i++){ // recorre 20 procesos
+
+            for (int j = 0; j < np; j++){ // 
+
+                if(pAux[j].getLlegada() == i){
+
+                    int tEjecucion = pAux[j].getEjecucion();
+
+                    for (int k = 0; k < pAux[j].getEjecucion(); k++){
                         cola.add(j);
-                        //System.out.println(j); Para saber en que momento entran en cola
-                        e--;
+                        tEjecucion--;
                     }
-                    p[j].setEjecucion(e);
+
+                    pAux[j].setEjecucion(tEjecucion);
                 }
-        
+
             }
-            int proceso=cola.getFirst();
+
+            int proceso = cola.getFirst();
             cola.removeFirst();
-            System.out.println("Tiempo -->"+i+ "   Proceso-->"+proceso);   
+            System.out.println("Tiempo --> "+i+" Proceso --> "+proceso);
         }
     }
     
@@ -63,8 +72,46 @@ public class Algoritmos {
     public void srtf(){
     
     }
+    
     public void roundrobin(int q){
         this.q=q;
+
+        Procesos pAux[] = new Procesos[np];
+        
+        for (int i = 0; i < np; i++){
+            pAux[i] = p[i];
+
+            te += pAux[i].getEjecucion(); // calcula tiempo final
+        }
+
+        System.out.println("RRobin 2");
+
+        for(int i = 0; i < te; i++){ // recorre 20 procesos
+
+            for (int j = 0; j < np; j++){ // 
+
+                if(pAux[j].getLlegada() <= i){
+                    int tEjecucion = pAux[j].getEjecucion();
+
+                    for (int k = 0; k < q; k++){
+                        cola.add(pAux[j].getId());
+                        tEjecucion--;
+                    }
+
+                    Procesos ini = pAux[0];
+                    for(int k = 0; k < np-1; k++){
+                        pAux[k] = pAux[k+1];
+                    }
+                    pAux[np-1] = ini;
+                    pAux[np-1].setEjecucion(tEjecucion);
+                }
+
+            }
+
+            int proceso = cola.getFirst();
+            cola.removeFirst();
+            System.out.println("Tiempo --> "+i+" Proceso --> "+proceso);
+        }
     }
     
     
